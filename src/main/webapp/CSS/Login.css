@@ -1,0 +1,44 @@
+/* 管理員登入畫面 */
+body {
+    background-color: lightblue;
+    margin: 0;
+    height: 100vh; /* 讓 body 撐滿整個視窗高度 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-login {
+    border-radius: 12px;
+    width: 320px; /* 設定元素寬度 */
+    padding: 20px; /* 給內部一些空間 */
+    background-color: lavender; /* 背景顏色 */
+    display: flex;
+    flex-direction: column; /* 讓子元素垂直排列 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加一些陰影效果 */
+}
+
+.group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 讓 label 和 input 分開排列 */
+    margin-bottom: 15px; /* 給每個元素之間添加空隙 */
+}
+
+.group label {
+    width: 80px; /* 給每個 label 設定固定寬度 */
+}
+
+.group input {
+    flex: 1; /* 讓 input 填滿剩餘空間 */
+    padding: 5px;
+}
+
+button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+}
+.login_mse {
+    color: red;
+}

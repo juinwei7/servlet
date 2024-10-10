@@ -1,0 +1,87 @@
+/* 列表頁面 */
+.hand {
+    contain: content;
+    text-align: center;
+
+}
+div.up-head::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+div.form-inline-parent{
+    margin: 10px;
+    float: left;
+}
+
+div.main{
+    position: relative;
+}
+div.my-block{
+    margin-right: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+div.UserForm{
+    margin-bottom: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/*
+
+    註冊頁面
+
+ */
+
+body .registration-page{
+    background-color: lightblue;
+}
+.text-title{
+    text-align: center;
+}
+
+.registration-page{
+    border-radius: 12px;
+    width: 350px; /* 設定元素寬度 */
+    height: 400px; /* 設定元素高度 */
+    background-color: lavender; /* 背景顏色，便於查看效果 */
+    position: absolute; /* 讓元素可以根據父元素定位 */
+    top: 50%; /* 垂直居中 */
+    left: 50%; /* 水平居中 */
+    transform: translate(-50%, -50%); /* 用於精確地將元素移動到正中間 */
+    display: flex;
+
+    justify-content: center; /* 可選：水平居中內部內容 */
+    align-items: center; /* 可選：垂直居中內部內容 */
+}
+.form-group {
+    display: flex;
+    align-items: center;
+}
+
+.form-group label{
+    width: 55px;
+}
+.btn-default {
+    display: flex;
+    margin: auto;
+}
+
+.checkbox{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox h5{
+    margin-left: auto;
+    color: red;
+}
+
+.var-null{
+    display: flex;
+    align-content: center;
+}

@@ -1,0 +1,28 @@
+/* 管理員用戶查詢 */
+body {
+    background-color: lightblue;
+    margin: 0;
+    position: relative;
+}
+.header h2 {
+    font-size: 20px;
+}
+.fuc {
+    display: flex;
+    position: absolute;
+    border-radius: 12px;
+    width: 200px; /* 設定元素寬度 */
+    padding: 20px; /* 給內部一些空間 */
+    background-color: lavender; /* 背景顏色 */
+
+    flex-direction: column; /* 讓子元素垂直排列 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加一些陰影效果 */
+    margin-top: 2%;
+    margin-left: 5%;
+    justify-content: center;
+    align-items: center;
+    /*margin-left: 20px;*/
+}
+.group{
+    font-size: 15px;
+}
