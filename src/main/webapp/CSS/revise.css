@@ -36,14 +36,14 @@ div.UserForm{
 
  */
 
-body .registration-page{
+body .revise-page{
     background-color: lightblue;
 }
 .text-title{
     text-align: center;
 }
 
-.registration-page{
+.revise-page{
     border-radius: 12px;
     width: 350px; /* 設定元素寬度 */
     height: 460px; /* 設定元素高度 */
@@ -70,14 +70,8 @@ body .registration-page{
     margin: auto;
 }
 
-.checkbox{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.checkbox h5{
-    margin-left: auto;
+.error-msg h5{
+    margin-left: 50px;
     color: red;
 }
 

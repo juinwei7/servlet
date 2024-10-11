@@ -37,14 +37,14 @@
 
     <div class="btn-container my-block">
         <a type="button" class="btn btn-primary btn-sm" href="RegisterServlet">添加用戶</a>
-        <a type="button" class="btn btn-primary btn-sm" href="">刪除用戶</a>
+        <a type="button" class="btn btn-primary btn-sm" href="javascript:deleteUserSelect()">刪除用戶</a>
     </div>
 
 
     <div class="UserForm">
         <table class="table table-bordered">
             <thead>
-            <th><input type="checkbox"></th>
+            <th><input type="checkbox" class="selectBox-all"></th>
             <th>用戶ID</th>
             <th>用戶姓名</th>
             <th>性別</th>
@@ -52,11 +52,13 @@
             <th>地區</th>
             <th>電話號碼</th>
             <th>email</th>
+            <th>操作</th>
             </thead>
+
             <tbody>
             <c:forEach items="${requestScope.users}" var="user">
                 <tr>
-                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox" class="selectBox" data-id="${user.id}"></td>
                     <td>${user.id}</td>
                     <td>${user.name}</td>
                     <td>${user.gender}</td>
@@ -64,34 +66,53 @@
                     <td>${user.address}</td>
                     <td>${user.phone}</td>
                     <td>${user.email}</td>
+                    <td>
+                        <div class="setting">
+                            <a href="${pageContext.request.contextPath}/reviseUserServlet?id=${user.id}">修改</a>
+
+                            <a href="javascript:deleteUser(${user.id})">刪除</a>
+                        </div>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
+
         </table>
+
+
         <div>
             <nav aria-label="Page navigation">
                 <ul class="pagination">
-                    <li>
-                        <a href="#" aria-label="Previous">
+                    <li class="${requestScope.page == 1 ? 'disabled' : ''}">
+                        <a href="<c:url value='/UserListServlet?page=${requestScope.page - 1}' />" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li>
-                        <a href="#" aria-label="Next">
+                    <c:forEach var="pg" begin="1" end="${requestScope.totoPage}">
+                        <li class="${pg == requestScope.page ? 'active' : ''}">
+                            <a href="<c:url value='/UserListServlet?page=${pg}' />">${pg}</a>
+                        </li>
+                    </c:forEach>
+                    <li class="${requestScope.page == requestScope.totoPage ? 'disabled' : ''}">
+                        <a href="<c:url value='/UserListServlet?page=${requestScope.page + 1}' />" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                 </ul>
+                <h4>總比數: ${requestScope.totoUserCount} / 目前頁數: ${requestScope.page}</h4>
             </nav>
         </div>
+
     </div>
 
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const contextPath = "${pageContext.request.contextPath}";
+</script>
+<script src="${pageContext.request.contextPath}/JS/UserList.js"></script>
 
 
 </body>

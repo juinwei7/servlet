@@ -13,6 +13,9 @@
 <div class="admin-login">
     <form id="loginForm" action="${pageContext.request.contextPath}/login" method="POST">
         <div class="group">
+            <h3>管理員登入</h3>
+        </div>
+        <div class="group">
             <label for="account">帳號</label>
             <input type="text" class="form-control" id="account" name="account" required>
         </div>
