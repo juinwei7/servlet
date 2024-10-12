@@ -4,6 +4,7 @@ package org.example.user.dao;
 import org.example.user.domain.User;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用戶操作的Dao
@@ -22,8 +23,8 @@ public interface UserDao {
 
     public boolean removeUser(String id);
 
-    public int totoUserCount();
+    public int totoUserCount(Map<String, Object> condition);
 
-    public List<User> getUserLimit(int start, int limit);
+    public List<User> getUserLimitByCondition(int start, int limit, Map<String, Object> condition);
 
 }

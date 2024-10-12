@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.example.user.domain.PageBean;
 import org.example.user.domain.User;
 import org.example.user.service.UserService;
 import org.example.user.service.impl.UserServiceImpl;
@@ -28,17 +29,19 @@ public class UserListServlet extends HttpServlet {
 
         UserService service = new UserServiceImpl();
 
-        int totoUserCount = service.totoUserCount();
         int limit = 10;
         int page = req.getParameter("page") == null ? 1 : Integer.parseInt(req.getParameter("page"));
-        int totoPage = totoUserCount / limit + (totoUserCount % limit == 0 ? 0 : 1);
+        page = Math.max(page, 1); //除錯
 
-        List<User> users = service.userByPage(page, limit);
+        //處理頁數
+        PageBean<User> pageBean = service.getUserByPage(page, limit, req.getParameterMap());
 
-        req.setAttribute("totoPage", totoPage);
-        req.setAttribute("page", page);
-        req.setAttribute("totoUserCount", totoUserCount);
-        req.setAttribute("users", users);
+        String queryString = req.getQueryString();
+        if (queryString != null) queryString = queryString.replaceAll("(&?page=\\d+)", ""); //表達式
+
+        req.setAttribute("condition", req.getParameterMap());
+        req.setAttribute("queryString", queryString);
+        req.setAttribute("pageBean", pageBean);
         req.getRequestDispatcher("/Web-Jsp/UserList.jsp").forward(req, resp);
 
     }

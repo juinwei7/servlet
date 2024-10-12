@@ -22,7 +22,5 @@ public class PageBean<T> {
                 "list=" + list +
                 "currentPage=" + currentPage +
                 "rows" + rows + " }";
-
-
     }
 }

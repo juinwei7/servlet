@@ -8,7 +8,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class UserDaoImpl implements UserDao {
 
@@ -32,8 +35,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void addUser(User user) {
-            String sql = "INSERT INTO user (name, gender, age, address, phone, email) VALUES (?, ?, ?, ?, ?, ?)";
-            jdbcTemplate.update(sql, user.getName(), user.getGender(), user.getAge(), user.getAddress(), user.getPhone(), user.getEmail());
+        String sql = "INSERT INTO user (name, gender, age, address, phone, email) VALUES (?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, user.getName(), user.getGender(), user.getAge(), user.getAddress(), user.getPhone(), user.getEmail());
     }
 
     @Override
@@ -58,18 +61,55 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int totoUserCount() {
-        String sql = "select count(*) from user";
+    public int totoUserCount(Map<String, Object> condition) {
+        String sql = "select count(*) from user where 1 = 1";
+
+        StringBuilder sb = new StringBuilder(sql);
+        Set<String> keys = condition.keySet();
+        List<Object> params = new ArrayList<>();
+
+        // 動態添加查詢條件
+        for (String key : keys) {
+            String value = condition.get(key).toString();
+            if (value != null && !"".equals(value)) {
+                sb.append(" AND " + key + " LIKE ?");
+                params.add("%" + value + "%");  // 使用 LIKE 查詢時需要加上 %
+            }
+        }
+
+        String finalSql = sb.toString();
+
+        // 使用 try-catch 保護查詢操作
         try {
-            return jdbcTemplate.queryForObject(sql, Integer.class);
+            // 傳遞參數時使用 params.toArray()
+            return jdbcTemplate.queryForObject(finalSql, params.toArray(), Integer.class);
         } catch (EmptyResultDataAccessException e) {
-            return 0;  // 如果沒有結果，返回0
+            return 0;  // 如果沒有結果，返回 0
         }
     }
 
+
     @Override
-    public List<User> getUserLimit(int start, int limit) {
-        String sql = "SELECT * FROM user LIMIT ?, ?";
-        return jdbcTemplate.query(sql, new Object[]{start, limit}, new BeanPropertyRowMapper<>(User.class));
+    public List<User> getUserLimitByCondition(int start, int limit, Map<String, Object> condition) {
+        String sql = "SELECT * FROM user WHERE 1 = 1";
+
+        StringBuilder sb = new StringBuilder(sql);
+        List<Object> params = new ArrayList<>();
+
+        for (String key : condition.keySet()) {
+            String value = condition.get(key).toString();
+            if (value != null && !"".equals(value)) {
+                sb.append(" AND " + key + " LIKE ?");
+                params.add("%" + value + "%");
+            }
+        }
+
+        sb.append(" LIMIT ?, ?");
+        params.add(start);
+        params.add(limit);
+
+        String finalSql = sb.toString();
+
+        return jdbcTemplate.query(finalSql, params.toArray(), new BeanPropertyRowMapper<>(User.class));
     }
 }

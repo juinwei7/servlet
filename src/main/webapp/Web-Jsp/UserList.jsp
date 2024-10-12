@@ -17,18 +17,18 @@
 <div class="main">
     <div class="up-head">
         <div class="form-inline-parent">
-            <form class="form-inline">
+            <form class="form-inline" action="${pageContext.request.contextPath}/UserListServlet" >
                 <div class="form-group">
-                    <label for="InputName">名稱</label>
-                    <input type="text" class="form-control" id="InputName">
+                    <label for="name">名稱</label>
+                    <input type="text" class="form-control" id="name" name="name" value="${requestScope.condition.name[0]}">
                 </div>
                 <div class="form-group">
-                    <label for="InputGender">城市</label>
-                    <input type="text" class="form-control" id="InputGender">
+                    <label for="address">城市</label>
+                    <input type="text" class="form-control" id="address" name="address" value="${requestScope.condition.address[0]}">
                 </div>
                 <div class="form-group">
-                    <label for="Email">Email</label>
-                    <input type="email" class="form-control" id="Email">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" id="email" name="email" value="${requestScope.condition.email[0]}">
                 </div>
                 <button type="submit" class="btn-default">搜尋</button>
             </form>
@@ -56,7 +56,7 @@
             </thead>
 
             <tbody>
-            <c:forEach items="${requestScope.users}" var="user">
+            <c:forEach items="${requestScope.pageBean.list}" var="user">
                 <tr>
                     <td><input type="checkbox" class="selectBox" data-id="${user.id}"></td>
                     <td>${user.id}</td>
@@ -83,23 +83,23 @@
         <div>
             <nav aria-label="Page navigation">
                 <ul class="pagination">
-                    <li class="${requestScope.page == 1 ? 'disabled' : ''}">
-                        <a href="<c:url value='/UserListServlet?page=${requestScope.page - 1}' />" aria-label="Previous">
+                    <li class="${requestScope.pageBean.currentPage == 1 ? 'disabled' : ''}">
+                        <a href="<c:url value='/UserListServlet?${requestScope.queryString}&page=${requestScope.pageBean.currentPage - 1}' />" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <c:forEach var="pg" begin="1" end="${requestScope.totoPage}">
-                        <li class="${pg == requestScope.page ? 'active' : ''}">
-                            <a href="<c:url value='/UserListServlet?page=${pg}' />">${pg}</a>
+                    <c:forEach var="pg" begin="1" end="${requestScope.pageBean.totalPage}">
+                        <li class="${pg == requestScope.pageBean.currentPage ? 'active' : ''}">
+                            <a href="<c:url value='/UserListServlet?${requestScope.queryString}&page=${pg}' />">${pg}</a>
                         </li>
                     </c:forEach>
-                    <li class="${requestScope.page == requestScope.totoPage ? 'disabled' : ''}">
-                        <a href="<c:url value='/UserListServlet?page=${requestScope.page + 1}' />" aria-label="Next">
+                    <li class="${requestScope.pageBean.currentPage == requestScope.pageBean.totalPage ? 'disabled' : ''}">
+                        <a href="<c:url value='/UserListServlet?${requestScope.queryString}&page=${requestScope.pageBean.currentPage + 1}' />" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                 </ul>
-                <h4>總比數: ${requestScope.totoUserCount} / 目前頁數: ${requestScope.page}</h4>
+                <h4>總比數: ${requestScope.pageBean.totalCount} / 目前頁數: ${requestScope.pageBean.currentPage}</h4>
             </nav>
         </div>
 
